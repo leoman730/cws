@@ -1,0 +1,606 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Movable 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-06-02 14:07+0830\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Roy Guan <roy@theme-junkie.com>\n"
+"Language-Team: Theme Junkie <support@theme-junkie.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: English\n"
+"X-Poedit-Country: UNITED STATES\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPath-1: ..\n"
+
+#: ../404.php:6
+#: ../header.php:66
+msgid "Home"
+msgstr ""
+
+#: ../404.php:6
+msgid "404 Not found"
+msgstr ""
+
+#: ../404.php:13
+msgid "404! We couldn't find the page!"
+msgstr ""
+
+#: ../404.php:17
+msgid "The page you've requested <strong>can not be displayed</strong>. It appears you've missed your intended destination, either through a bad or outdated link, or a typo in the page you were hoping to reach."
+msgstr ""
+
+#: ../archive.php:22
+msgid "Newer Entries"
+msgstr ""
+
+#: ../archive.php:23
+msgid "Older Entries"
+msgstr ""
+
+#: ../comments.php:9
+msgid "This post is password protected. Enter the password to view comments."
+msgstr ""
+
+#: ../comments.php:23
+msgid "No Responses"
+msgstr ""
+
+#: ../comments.php:23
+msgid "One Response"
+msgstr ""
+
+#: ../comments.php:23
+msgid "% Responses"
+msgstr ""
+
+#: ../comments.php:23
+msgid "to"
+msgstr ""
+
+#: ../comments.php:40
+msgid "Trackbacks/Pingbacks"
+msgstr ""
+
+#: ../comments.php:52
+msgid "No comments yet."
+msgstr ""
+
+#: ../comments.php:56
+msgid "Comments are closed."
+msgstr ""
+
+#: ../comments.php:68
+msgid "Leave a Comment"
+msgstr ""
+
+#: ../comments.php:68
+#, php-format
+msgid "Leave a Reply to %s"
+msgstr ""
+
+#: ../comments.php:76
+msgid "You must be"
+msgstr ""
+
+#: ../comments.php:76
+msgid "logged in"
+msgstr ""
+
+#: ../comments.php:76
+msgid "to post a comment."
+msgstr ""
+
+#: ../comments.php:84
+msgid "Logged in as"
+msgstr ""
+
+#: ../comments.php:84
+msgid "Log out of this account"
+msgstr ""
+
+#: ../comments.php:84
+msgid "Logout"
+msgstr ""
+
+#: ../comments.php:90
+msgid "Name"
+msgstr ""
+
+#: ../comments.php:90
+#: ../comments.php:95
+msgid "Required"
+msgstr ""
+
+#: ../comments.php:95
+msgid "Mail (will not be published)"
+msgstr ""
+
+#: ../comments.php:100
+msgid "Website"
+msgstr ""
+
+#: ../comments.php:105
+msgid "You can use these tags"
+msgstr ""
+
+#: ../comments.php:109
+msgid "Submit Comment"
+msgstr ""
+
+#: ../footer.php:41
+msgid "All rights reserved"
+msgstr ""
+
+#: ../footer.php:41
+msgid "Site Admin"
+msgstr ""
+
+#: ../footer.php:41
+msgid "Return to Top"
+msgstr ""
+
+#: ../footer.php:46
+msgid "Proudly designed by"
+msgstr ""
+
+#: ../footer.php:46
+msgid "Theme Junkie"
+msgstr ""
+
+#: ../header.php:74
+msgid "search this site..."
+msgstr ""
+
+#: ../header.php:95
+msgid "All Topics"
+msgstr ""
+
+#: ../header.php:107
+msgid "Follow us on Digg"
+msgstr ""
+
+#: ../header.php:107
+msgid "Digg"
+msgstr ""
+
+#: ../header.php:111
+msgid "Follow us on StumbleUpon"
+msgstr ""
+
+#: ../header.php:111
+msgid "StumbleUpon"
+msgstr ""
+
+#: ../header.php:115
+msgid "Become a fan on LinkedIn"
+msgstr ""
+
+#: ../header.php:115
+msgid "LinkedIn"
+msgstr ""
+
+#: ../header.php:119
+msgid "YouTube Channel"
+msgstr ""
+
+#: ../header.php:119
+msgid "YouTube"
+msgstr ""
+
+#: ../header.php:122
+msgid "Flickr Photo Stream"
+msgstr ""
+
+#: ../header.php:122
+msgid "Flickr"
+msgstr ""
+
+#: ../header.php:126
+msgid "Become a fan on Facebook"
+msgstr ""
+
+#: ../header.php:126
+msgid "Facebook"
+msgstr ""
+
+#: ../header.php:130
+msgid "Follow us on Twitter"
+msgstr ""
+
+#: ../header.php:130
+msgid "Twitter"
+msgstr ""
+
+#: ../header.php:134
+msgid "Subscribe via Feedburner"
+msgstr ""
+
+#: ../header.php:134
+#: ../header.php:136
+msgid "RSS"
+msgstr ""
+
+#: ../header.php:136
+msgid "RSS feed"
+msgstr ""
+
+#: ../header.php:138
+msgid "Reset Homepage Layout"
+msgstr ""
+
+#: ../header.php:138
+msgid "Reset"
+msgstr ""
+
+#: ../page.php:17
+#: ../single.php:24
+#: ../template-fullwidth.php:23
+msgid "Pages:"
+msgstr ""
+
+#: ../searchform.php:2
+msgid "Search in this site..."
+msgstr ""
+
+#: ../single.php:11
+msgid "0"
+msgstr ""
+
+#: ../single.php:11
+msgid "1"
+msgstr ""
+
+#: ../single.php:11
+msgid "%"
+msgstr ""
+
+#: ../single.php:16
+msgid "By "
+msgstr ""
+
+#: ../single.php:16
+msgid "Published:"
+msgstr ""
+
+#: ../single.php:30
+msgid "<div class=\"entry-tags\"><span>Tags:</span>&nbsp;"
+msgstr ""
+
+#: ../single.php:42
+msgid "View all posts by "
+msgstr ""
+
+#: ../template-archives.php:35
+msgid "Categories"
+msgstr ""
+
+#: ../template-archives.php:40
+msgid "Monthly Archive"
+msgstr ""
+
+#: ../includes/custom-functions.php:7
+msgid "Primary Nav"
+msgstr ""
+
+#: ../includes/custom-functions.php:8
+msgid "Secondary Nav"
+msgstr ""
+
+#: ../includes/custom-functions.php:110
+msgid "on "
+msgstr ""
+
+#: ../includes/sidebar-init.php:8
+#: ../includes/sidebar-init.php:10
+msgid "Sidebar"
+msgstr ""
+
+#: ../includes/sidebar-init.php:19
+msgid "Footer Widget Area 1"
+msgstr ""
+
+#: ../includes/sidebar-init.php:21
+#: ../includes/sidebar-init.php:32
+#: ../includes/sidebar-init.php:43
+#: ../includes/sidebar-init.php:54
+msgid "The bottom widget area"
+msgstr ""
+
+#: ../includes/sidebar-init.php:30
+msgid "Footer Widget Area 2"
+msgstr ""
+
+#: ../includes/sidebar-init.php:41
+msgid "Footer Widget Area 3"
+msgstr ""
+
+#: ../includes/sidebar-init.php:52
+msgid "Footer Widget Area 4"
+msgstr ""
+
+#: ../includes/theme-comments.php:33
+msgid "at"
+msgstr ""
+
+#: ../includes/theme-comments.php:34
+msgid "Direct link to this comment"
+msgstr ""
+
+#: ../includes/theme-comments.php:35
+msgid "Edit"
+msgstr ""
+
+#: ../includes/theme-comments.php:45
+msgid "Your comment is awaiting moderation."
+msgstr ""
+
+#: ../includes/templates/breadcrumbs.php:8
+msgid "Posts Tagged &quot;"
+msgstr ""
+
+#: ../includes/templates/breadcrumbs.php:10
+#: ../includes/templates/breadcrumbs.php:12
+#: ../includes/templates/breadcrumbs.php:14
+msgid "Posts made in"
+msgstr ""
+
+#: ../includes/templates/breadcrumbs.php:16
+msgid "Search results for"
+msgstr ""
+
+#: ../includes/templates/breadcrumbs.php:24
+#, php-format
+msgid "Subscribe to %s"
+msgstr ""
+
+#: ../includes/templates/breadcrumbs.php:24
+msgid "Subscribe"
+msgstr ""
+
+#: ../includes/templates/breadcrumbs.php:28
+msgid "Posts by "
+msgstr ""
+
+#: ../includes/templates/not-found.php:3
+msgid "No standard web pages containing all your search terms were found."
+msgstr ""
+
+#: ../includes/templates/not-found.php:4
+msgid "Your search"
+msgstr ""
+
+#: ../includes/templates/not-found.php:4
+msgid "did not match any documents."
+msgstr ""
+
+#: ../includes/templates/not-found.php:5
+msgid "Suggestions"
+msgstr ""
+
+#: ../includes/templates/not-found.php:7
+msgid "Make sure all words are spelled correctly."
+msgstr ""
+
+#: ../includes/templates/not-found.php:8
+msgid "Try different keywords."
+msgstr ""
+
+#: ../includes/templates/not-found.php:9
+msgid "Try more general keywords."
+msgstr ""
+
+#: ../includes/widgets/widget-ads.php:10
+msgid "ThemeJunkie - Advertisement"
+msgstr ""
+
+#: ../includes/widgets/widget-ads.php:53
+msgid "Title (optional):"
+msgstr ""
+
+#: ../includes/widgets/widget-ads.php:57
+msgid "Ad Code:"
+msgstr ""
+
+#: ../includes/widgets/widget-ads.php:62
+msgid "Image Url:"
+msgstr ""
+
+#: ../includes/widgets/widget-ads.php:66
+msgid "Link URL:"
+msgstr ""
+
+#: ../includes/widgets/widget-ads.php:70
+msgid "Alt text:"
+msgstr ""
+
+#: ../includes/widgets/widget-author.php:9
+msgid "ThemeJunkie - AuthorInfo"
+msgstr ""
+
+#: ../includes/widgets/widget-author.php:53
+#: ../includes/widgets/widget-twitter.php:160
+msgid "Title:"
+msgstr ""
+
+#: ../includes/widgets/widget-author.php:57
+msgid "Bio:"
+msgstr ""
+
+#: ../includes/widgets/widget-author.php:61
+msgid "<a href=\"http://www.gravatar.com/\">Gravatar</a> E-mail:"
+msgstr ""
+
+#: ../includes/widgets/widget-author.php:65
+msgid "Gravatar Size:"
+msgstr ""
+
+#: ../includes/widgets/widget-author.php:69
+msgid "Gravatar Alignment:"
+msgstr ""
+
+#: ../includes/widgets/widget-author.php:71
+msgid "Left"
+msgstr ""
+
+#: ../includes/widgets/widget-author.php:72
+msgid "Right"
+msgstr ""
+
+#: ../includes/widgets/widget-author.php:76
+msgid "Read More Text (optional):"
+msgstr ""
+
+#: ../includes/widgets/widget-author.php:80
+msgid "Read More URL (optional):"
+msgstr ""
+
+#: ../includes/widgets/widget-author.php:84
+msgid "Visible Pages:"
+msgstr ""
+
+#: ../includes/widgets/widget-author.php:86
+msgid "All"
+msgstr ""
+
+#: ../includes/widgets/widget-author.php:87
+msgid "Home only"
+msgstr ""
+
+#: ../includes/widgets/widget-author.php:88
+msgid "Single only"
+msgstr ""
+
+#: ../includes/widgets/widget-flickr.php:10
+msgid "ThemeJunkie - Flickr"
+msgstr ""
+
+#: ../includes/widgets/widget-flickr.php:23
+msgid "Photos on <span>flick<span>r</span></span>"
+msgstr ""
+
+#: ../includes/widgets/widget-flickr.php:46
+msgid "Flickr ID (<a href=\"http://www.idgettr.com\">idGettr</a>):"
+msgstr ""
+
+#: ../includes/widgets/widget-flickr.php:50
+msgid "Number:"
+msgstr ""
+
+#: ../includes/widgets/widget-flickr.php:58
+msgid "Type:"
+msgstr ""
+
+#: ../includes/widgets/widget-flickr.php:60
+msgid "User"
+msgstr ""
+
+#: ../includes/widgets/widget-flickr.php:61
+msgid "Group"
+msgstr ""
+
+#: ../includes/widgets/widget-flickr.php:65
+msgid "Sorting:"
+msgstr ""
+
+#: ../includes/widgets/widget-flickr.php:67
+#: ../includes/widgets/widget-tabs.php:26
+msgid "Latest"
+msgstr ""
+
+#: ../includes/widgets/widget-flickr.php:68
+msgid "Random"
+msgstr ""
+
+#: ../includes/widgets/widget-flickr.php:72
+msgid "Size:"
+msgstr ""
+
+#: ../includes/widgets/widget-flickr.php:74
+msgid "Square"
+msgstr ""
+
+#: ../includes/widgets/widget-flickr.php:75
+msgid "Medium"
+msgstr ""
+
+#: ../includes/widgets/widget-flickr.php:76
+msgid "Thumbnail"
+msgstr ""
+
+#: ../includes/widgets/widget-tabs.php:9
+msgid "Display an Ajax tabber with Popular Posts, Latest Posts, Recent Comments and Tags."
+msgstr ""
+
+#: ../includes/widgets/widget-tabs.php:11
+msgid "ThemeJunkie - Tabs"
+msgstr ""
+
+#: ../includes/widgets/widget-tabs.php:25
+msgid "Popular"
+msgstr ""
+
+#: ../includes/widgets/widget-tabs.php:27
+msgid "Comments"
+msgstr ""
+
+#: ../includes/widgets/widget-tabs.php:28
+msgid "Tags"
+msgstr ""
+
+#: ../includes/widgets/widget-tabs.php:85
+msgid "Number of popular posts to show::"
+msgstr ""
+
+#: ../includes/widgets/widget-tabs.php:88
+msgid "Number of latest posts to show:"
+msgstr ""
+
+#: ../includes/widgets/widget-tabs.php:90
+msgid "Number of recent comments to show:"
+msgstr ""
+
+#: ../includes/widgets/widget-tabs.php:92
+msgid "Avatar size: e.g. 42"
+msgstr ""
+
+#: ../includes/widgets/widget-twitter.php:56
+msgid "Display your tweets from Twitter"
+msgstr ""
+
+#: ../includes/widgets/widget-twitter.php:57
+msgid "ThemeJunkie - Twitter"
+msgstr ""
+
+#: ../includes/widgets/widget-twitter.php:66
+msgid "Twitter Updates"
+msgstr ""
+
+#: ../includes/widgets/widget-twitter.php:122
+msgid "Error: Please make sure the Twitter account is <a href='http://help.twitter.com/forums/10711/entries/14016'>public</a>."
+msgstr ""
+
+#: ../includes/widgets/widget-twitter.php:124
+msgid "Error: Twitter did not respond. Please wait a few minutes and refresh this page."
+msgstr ""
+
+#: ../includes/widgets/widget-twitter.php:163
+msgid "Twitter username:"
+msgstr ""
+
+#: ../includes/widgets/widget-twitter.php:166
+msgid "Maximum number of tweets to show:"
+msgstr ""
+
+#: ../includes/widgets/widget-twitter.php:175
+msgid "Hide replies"
+msgstr ""
+
+#: ../includes/widgets/widget-twitter.php:178
+msgid "Text to display between tweet and timestamp:"
+msgstr ""
+

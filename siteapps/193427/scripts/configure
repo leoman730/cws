@@ -1,0 +1,110 @@
+<?php
+ini_set('include_path', '.');
+
+require_once('env-parser.php');
+require_once('file-util.php');
+require_once('db-util.php');
+require_once('app-util.php');
+require_once('upgrade-app.php');
+
+function admin_password_crypt($value)
+{
+    return md5($value);
+}
+
+
+$config_files = array( '/' => array( array('wp-config.php.in', 'wp-config.php')), '/cgi-bin' => array() );
+$schema_files = array( 'schema.sql' => 'main' );
+$reconf_schema_files = array( 'reconfigure.sql' => 'main' );
+$remove_schema_files = array( 'remove.sql' => 'main' );
+
+$psa_params = array (  );
+$db_ids = array ( 'main' );
+$web_ids = array ( 'blogs/media', 'wp-content', '/tmp', '/' );
+$settings_params = array ( 'admin_name', 'admin_email', 'title' );
+$settings_enum_params = array ( 'locale' => array( 'en-US' => 'en_US', 'ru-RU' => 'ru_RU', 'de-DE' => 'de_DE', 'nl-NL' => 'nl_NL', 'fr-FR' => 'fr_FR', 'es-ES' => 'es_ES', 'it-IT' => 'it_IT', 'ja-JP' => 'ja', 'tr-TR' => 'tr_TR', 'pl-PL' => 'pl_PL', 'zh-CN' => 'zh_CN', 'da-DK' => 'da_DK', 'zh-TW' => 'zh_TW' ) );
+$crypt_settings_params = array ( 'admin_password' );
+
+$psa_modify_hash = get_psa_modify_hash($psa_params);
+$db_modify_hash = get_db_modify_hash($db_ids);
+$web_modify_hash = get_web_modify_hash($web_ids);
+$settings_modify_hash = get_settings_modify_hash($settings_params);
+$settings_enum_modify_hash = get_settings_enum_modify_hash($settings_enum_params);
+$crypt_settings_modify_hash = get_crypt_settings_modify_hash($crypt_settings_params);
+
+$additional_modify_hash = array_merge(get_additional_modify_hash(), $web_modify_hash);
+
+if(count($argv) < 2)
+{
+    print "Usage: configure (install | upgrade <version> | configure | remove)\n";
+    exit(1);
+}
+
+$command = $argv[1];
+
+if($command == "upgrade")
+{
+    if($argv[2] && $argv[3]){
+		$res = upgrade_app($argv[2], $argv[3], $config_files, $db_ids, $psa_modify_hash, $db_modify_hash, $settings_modify_hash, $crypt_settings_modify_hash, $settings_enum_modify_hash, $additional_modify_hash);
+		if ( $res == 0 ) {
+			chdir($psa_modify_hash['@@ROOT_DIR@@']."/wp-admin");
+			$_GET['step'] = 'upgrade_db';
+			require_once($psa_modify_hash['@@ROOT_DIR@@']."/wp-admin/upgrade.php");
+		}
+		exit($res);
+    }
+    else{
+		print "Error: upgrade version or release not specified.\n";
+		exit(1);
+    }
+}
+
+if($command == "install")
+{
+    configure($config_files, $schema_files, $db_ids, $psa_modify_hash, $db_modify_hash, $settings_modify_hash, $crypt_settings_modify_hash, $settings_enum_modify_hash, $additional_modify_hash);
+    chdir($psa_modify_hash['@@ROOT_DIR@@']."/wp-admin");
+    $_GET['step'] = 'upgrade_db';
+    require_once($psa_modify_hash['@@ROOT_DIR@@']."/wp-admin/upgrade.php");
+
+    exit(0);
+}
+
+if($command == "remove")
+{
+    remove_app($remove_schema_files, $db_ids, $psa_modify_hash, $db_modify_hash, $settings_modify_hash, $crypt_settings_modify_hash, $settings_enum_modify_hash, $additional_modify_hash);
+    exit(0);
+}
+
+if($command == "configure")
+{
+    configure($config_files, $reconf_schema_files, $db_ids, $psa_modify_hash, $db_modify_hash, $settings_modify_hash, $crypt_settings_modify_hash, $settings_enum_modify_hash, $additional_modify_hash);
+    exit(0);
+}
+
+print "Error: unknown command $command.\n";
+exit(1);
+
+function wp_generate_password($length = 12) {
+    $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()";
+    $password = '';
+    for ( $i = 0; $i < $length; $i++ )
+        $password .= substr($chars, mt_rand(0, strlen($chars) - 1), 1);
+    return $password;
+}
+
+function get_additional_modify_hash()
+{
+    $parameters = array();
+    $parameters['@@AUTH_KEY@@'] = wp_generate_password(64);
+    $parameters['@@SECURE_AUTH_KEY@@'] = wp_generate_password(64);
+    $parameters['@@LOGGED_IN_KEY@@'] = wp_generate_password(64);
+    $parameters['@@NONCE_KEY@@'] = wp_generate_password(64);
+    $parameters['@@AUTH_SALT@@'] = wp_generate_password(64);
+    $parameters['@@SECURE_AUTH_SALT@@'] = wp_generate_password(64);
+    $parameters['@@LOGGED_IN_SALT@@'] = wp_generate_password(64);
+    $parameters['@@NONCE_SALT@@'] = wp_generate_password(64);
+    return $parameters;
+}
+
+
+?>

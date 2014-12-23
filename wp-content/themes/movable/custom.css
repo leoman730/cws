@@ -1,0 +1,16 @@
+/* 
+CUSTOM STYLESHEET
+---------------------
+
+Instructions:
+
+Add your custom styles in this file instead of style.css so it 
+is easier to update the theme. Simply copy an existing style 
+from style.css to this file, and modify it to your liking. */
+
+#post-121 h1.entry-title{
+color:#ddd !important;
+}
+
+@font-face {font-family: 'Museo-700';src: url('http://childrensworkshopschool.org/wp-content/themes/movable/webfonts/243908_0_0.eot');src: url('http://childrensworkshopschool.org/wp-content/themes/movable/webfonts/243908_0_0.eot?#iefix') format('embedded-opentype'),url('http://childrensworkshopschool.org/wp-content/themes/movable/webfonts/243908_0_0.woff') format('woff'),url('http://childrensworkshopschool.org/wp-content/themes/movable/webfonts/243908_0_0.ttf') format('truetype');}
+
