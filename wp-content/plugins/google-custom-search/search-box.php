@@ -22,7 +22,6 @@ function display_search_box($display_results_option){
       google.setOnLoadCallback(function() {
         var customSearchControl = new google.search.CustomSearchControl('<?php echo $gsc_search_engine_id ?>');
         customSearchControl.setResultSetSize(google.search.Search.FILTERED_CSE_RESULTSET);
-        customSearchControl.enableAds('2496164227');
 		<?php if($gsc_open_results_in_same_window == "yes"){ ?>
 		customSearchControl.setLinkTarget(google.search.Search.LINK_TARGET_SELF);
 		<?php } ?>		

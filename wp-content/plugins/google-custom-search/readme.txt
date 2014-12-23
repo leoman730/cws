@@ -5,7 +5,7 @@ Donate link: http://littleHandyTips.com/support
 Tags: google search, google custom search, search results, pop-up, dialog, jquery, multiple site search
 Requires at least: 3.4
 Tested up to: 3.4
-Stable tag: 1.3.4
+Stable tag: 1.3.5
 
 This plugin uses Google's Search Engine to search your site's contents!
 You can also configure it through google to search multiple sites/domains.

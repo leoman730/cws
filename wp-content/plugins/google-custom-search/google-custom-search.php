@@ -3,7 +3,7 @@
 Plugin Name: Google Custom Search
 Plugin URI: http://littlehandytips.com/plugins/google-custom-search/
 Description: This plugin uses Google's Search Engine to search your site's contents! It gives you to option to display the Google search results in one of three formats. 1) As a pop-up dialog. 2) Within the widget 3) In an area you specify. Unleash the power of google search on your site!
-Version: 1.3.4
+Version: 1.3.5
 Author: Little Handy Tips
 Author URI: http://littleHandyTips.com
 License: 
