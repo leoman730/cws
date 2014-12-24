@@ -777,3 +777,11 @@ a.list-group-item.active > .badge, .nav-pills > .active > a > .badge { backgroun
 	#k-menu { display: none; }
 }
 /* == END media queries == */
+
+
+/* == Custom Css == */
+.yks-mailchimpFormContainer input {
+	background-color: transparent !important;
+	border: 2px solid #fff;
+}
+/* == END Custom Css == */
