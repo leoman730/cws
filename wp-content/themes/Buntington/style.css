@@ -784,4 +784,16 @@ a.list-group-item.active > .badge, .nav-pills > .active > a > .badge { backgroun
 	background-color: transparent !important;
 	border: 2px solid #fff;
 }
+
+
+.yks-mailchimpFormDivRowField input[type=checbox], 
+.yks-mailchimpFormDivRowField input[type=radio] {
+	margin-right: 5px;
+	margin-top: -4px; 
+}
+
+
+.map {
+color: #666;
+}
 /* == END Custom Css == */

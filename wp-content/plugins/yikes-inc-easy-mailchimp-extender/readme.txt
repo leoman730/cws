@@ -4,7 +4,7 @@ Donate link: http://yikesinc.com
 Tags: mailchimp, marketing, email, mailing lists, newsletter, sign up, forms, sign up form
 Requires at least: 3.0
 Tested up to: 4.1
-Stable tag: 5.2
+Stable tag: 5.3.1
 License: GPLv2 or later
 
 Easy MailChimp Forms allows you to painlessly add MailChimp sign up forms to your WordPress site and track user activity with interactive reports.
@@ -171,6 +171,15 @@ Simply click the link below the default value input field to add that tag as the
 
 We've also provided a way for you to define your own default value tags, and return any data you choose. This is done through the use of two separate filters ( `yikes_mailchimp_default_value_tag` and `yikes_mailchimp_process_default_value_tag` ). Check out the developer documentation for how to use the filters. The examples provided are extremely helpful.
 
+= Can I move the success/error message to below the form instead of displaying them above? =
+Yes! In version 5.3, we've allowed users to declare a constant which dictate where the error and success messages will appear in relation to the forms.
+
+By default , the error and success messages appear above the form. If you'd like them to appear below the form, simply add the following definition to your active themes function.php file.
+
+`
+define( "display_yikes_mc_form_messages", "after" ); 
+`
+
 == Developer Docs. ==
 
 **Text Domain**
@@ -332,6 +341,38 @@ N/A
 <br />
 
 **Filters**
+
+**Filter Name:**
+`yks_mailchimp_user_role`
+
+**Accepted Parameters:** 
+`$capability`
+
+**Parameter Info:**	
+
+`$capability = the lowest capability allowed to access the administration pages. defaults to 'manage_options' (admins).`
+
+**Description:**
+The following example will allow editors to access the YIKES MailChimp administration pages on the dashboard.
+
+**Example:**
+The following example will allow editors to access the YIKES MailChimp administration pages on the dashboard.
+`
+<?php
+	/**
+	* This example will allow editors to access the YIKES MailChimp administration pages
+	* If you would like authors or another user role to be able to access the admin  pages, you
+	* must set this to the lowest capability allowed. ( check : http://codex.wordpress.org/Roles_and_Capabilities for role capabilities )
+	* <em>note: for authors, you would use the 'publish_posts' capability.</em>
+	*/
+	function yikes_mailchimp_allow_editors( $capability ) {
+		$capability = 'edit_others_pages';
+		return $capability;
+	}
+	add_filter( 'yks_mailchimp_user_role' , 'yikes_mailchimp_allow_editors' );
+?>
+`
+<br />
 
 **Filter Name:**
 `yikes_mc_get_form_data`
@@ -754,6 +795,16 @@ These functions should be used in conjunction with the `yikes_mc_get_form_data` 
 
 == Changelog ==
 
+= 5.3.1 - January 13th, 2014 =
+
+* Enhancement: Added new filter to allow users to change which role has access to the MailChimp administration pages ( `yks-mailchimp-user-role` ) ( check readme for example )
+
+= 5.3 - January 11th, 2014 =
+
+* Enhancement: Added ability to move the success + error messages above or below the form based on a defined constant ( `display_yikes_mc_form_messages` [options: before/after] )
+* Enhancement: Added new settings and the ability to show/hide * = required field , from the top of the forms, via the settings page
+* Enhancement: Fixed incorrect error 'click here to update your profile' shown on front end on all errors
+
 = 5.2 - December 10th, 2014 =
 
 * New Feature: Added ability to add, edit or delete form fields directly from the WordPress dashboard
@@ -1014,8 +1065,15 @@ These functions should be used in conjunction with the `yikes_mc_get_form_data` 
 
 == Upgrade Notice ==
 
-= 5.2 - December 10th, 2014 =
+= 5.3.1 - January 13th, 2014 =
+* Enhancement: Added new filter to allow users to change which role has access to the MailChimp administration pages ( `yks-mailchimp-user-role` ) ( check readme for example )
 
+= 5.3 - January 11th, 2014 =
+* Enhancement: Added ability to move the success + error messages above or below the form based on a defined constant ( `display_yikes_mc_form_messages` [options: before/after] )
+* Enhancement: Added new settings and the ability to show/hide * = required field , from the top of the forms, via the settings page
+* Enhancement: Fixed incorrect error 'click here to update your profile' shown on front end on all errors
+
+= 5.2 - December 10th, 2014 =
 * New Feature: Added ability to add, edit or delete form fields directly from the WordPress dashboard
 * New Feature: Added ability to add, edit or delete interest groups directly from the WordPress dashboard
 * New Feature: Add "Update" link to forms when a user has previously subscribed
