@@ -10,16 +10,16 @@
  */
 
 class GCE_Event {
-	
+
 	public $feed;
-	
+
 	/**
 	 * Class constructor
-	 * 
+	 *
 	 * @since 2.0.0
 	 */
 	function __construct( GCE_Feed $feed, $id, $title, $description, $location, $start_time, $end_time, $link ) {
-		
+
 		$this->feed        = $feed;
 		$this->id          = $id;
 		$this->title       = $title;
@@ -28,30 +28,38 @@ class GCE_Event {
 		$this->start_time  = $start_time;
 		$this->end_time    = $end_time;
 		$this->link        = $link;
-		
+
 		//Calculate which day type this event is (SWD = single whole day, SPD = single part day, MWD = multiple whole day, MPD = multiple part day)
 		if ( ( $start_time + 86400 ) <= $end_time ) {
 			if ( ( $start_time + 86400 ) == $end_time ) {
 				$this->day_type = 'SWD';
 			} else {
 				if ( ( '12:00 am' == date( 'g:i a', $start_time ) ) && ( '12:00 am' == date( 'g:i a', $end_time ) ) ) {
-					$this->day_type = 'MWD';
+					if( $end_time - $start_time > 86400 ) {
+						$this->day_type = 'MWD';
+					} else {
+						$this->day_type = 'SWD';
+					}
 				} else {
 					$this->day_type = 'MPD';
 				}
 			}
 		} else {
-			$this->day_type = 'SPD';
+			if( date( 'D', $start_time ) == date( 'D', $end_time ) ) {
+				$this->day_type = 'SPD';
+			} else {
+				$this->day_type = 'MPD';
+			}
 		}
 	}
-	
+
 	/**
 	 * Returns an array of days (as UNIX timestamps) that this events spans
-	 * 
+	 *
 	 * @since 2.0.0
 	 */
-	function get_days() {	
-		
+	function get_days() {
+
 		if( $this->start_time !== null ) {
 			//Round start date to nearest day
 			$start_time = mktime( 0, 0, 0, date( 'm', $this->start_time ), date( 'd', $this->start_time ) , date( 'Y', $this->start_time ) );
@@ -85,7 +93,7 @@ class GCE_Event {
 
 	/**
 	 * Returns the markup for this event, so that it can be used in the construction of a grid / list
-	 * 
+	 *
 	 * @since 2.0.0
 	 */
 	function get_event_markup( $display_type, $num_in_day, $num ) {
@@ -102,14 +110,12 @@ class GCE_Event {
 
 		// First check if we use the builder or not
 		$use_simple = get_post_meta( $this->feed->id, 'gce_display_simple', true );
-		
+
 		if( empty( $use_simple ) ) {
 			return $this->use_builder();
 		}
 
 		// Setup the markup to return
-		//$display_options = get_option( 'gce_settings_general' );
-		
 		$display_options['display_start']         = get_post_meta( $this->feed->id, 'gce_display_start', true );
 		$display_options['display_start_text']    = get_post_meta( $this->feed->id, 'gce_display_start_text', true );
 		$display_options['display_end']           = get_post_meta( $this->feed->id, 'gce_display_end', true );
@@ -123,8 +129,8 @@ class GCE_Event {
 		$display_options['display_link_text']     = get_post_meta( $this->feed->id, 'gce_display_link_text', true );
 		$display_options['display_separator']     = get_post_meta( $this->feed->id, 'gce_display_separator', true );
 		$display_options['display_link_target']   = get_post_meta( $this->feed->id, 'gce_display_link_tab', true );
-		
-		$markup = '<p class="gce-' . $this->type . '-event">' . esc_html( $this->title )  . '</p>';
+
+		$markup = '<p class="gce-' . esc_attr( $this->type ) . '-event">' . esc_html( $this->title )  . '</p>';
 
 		$start_end = array();
 
@@ -148,8 +154,8 @@ class GCE_Event {
 
 		//Add the correct start / end, date / time information to $markup
 		foreach ( $start_end as $start_or_end => $info ) {
-			$markup .= '<p class="gce-' . $this->type . '-' . $start_or_end . '"><span>' . esc_html( $display_options['display_' . $start_or_end . '_text'] ) . '</span> ';
-			
+			$markup .= '<p class="gce-' . esc_attr( $this->type ) . '-' . $start_or_end . '"><span>' . esc_html( $display_options['display_' . $start_or_end . '_text'] ) . '</span> ';
+
 			if( ! empty( $display_options['display_' . $start_or_end] ) ) {
 				switch ( $display_options['display_' . $start_or_end] ) {
 					case 'time': $markup .= esc_html( $info['time'] );
@@ -169,7 +175,7 @@ class GCE_Event {
 		if ( ! empty( $display_options['display_location'] ) ) {
 			$event_location = $this->location;
 			if ( '' != $event_location )
-				$markup .= '<p class="gce-' . $this->type . '-loc"><span>' . esc_html( $display_options['display_location_text'] ) . '</span> ' . esc_html( $event_location ) . '</p>';
+				$markup .= '<p class="gce-' . esc_attr( $this->type ) . '-loc"><span>' . esc_html( $display_options['display_location_text'] ) . '</span> ' . esc_html( $event_location ) . '</p>';
 		}
 
 		//If description should be displayed (and is not empty) add to $markup
@@ -183,25 +189,38 @@ class GCE_Event {
 					$event_desc = trim( $event_desc[0] );
 				}
 
-				$markup .= '<p class="gce-' . $this->type . '-desc"><span>' . $display_options['display_desc_text'] . '</span> ' . make_clickable( nl2br( esc_html( $event_desc ) ) ) . '</p>';
+				$markup .= '<p class="gce-' . esc_attr( $this->type ) . '-desc"><span>' . esc_html( $display_options['display_desc_text'] ) . '</span> ' . make_clickable( nl2br( esc_html( $event_desc ) ) ) . '</p>';
 			}
 		}
 
 		//If link should be displayed add to $markup
 		if ( ! empty( $display_options['display_link'] ) ) {
+
 			$target = ( ! empty( $display_options['display_link_target'] ) ? 'target="blank"' : '' );
-			
-			$ctz  = get_option( 'timezone_string' );
-			
-			$link = $this->link . ( ! empty( $ctz ) ? '&ctz=' . $ctz : '' );
-			
-			$markup .= '<p class="gce-' . $this->type . '-link"><a href="' . esc_url( $link ) . '" ' . $target . '>' . esc_html( $display_options['display_link_text'] ) . '</a></p>';
+
+			$ctz = gce_get_wp_timezone();
+
+			if ( isset( $this->feed->id ) ) {
+				$tz_option = esc_attr( get_post_meta( $this->feed->id, '_feed_timezone_setting', true ) );
+				if ( 'use_calendar' == $tz_option ) {
+					$ctz = '';
+				}
+			}
+
+			// Check if it is a hangouts link first
+			if( strpos( $this->link, 'plus.google.com/events/' ) !== false ) {
+				$link = $this->link;
+			} else {
+				$link = $this->link . ( ! empty( $ctz ) ? '&ctz=' . $ctz : '' );
+			}
+
+			$markup .= '<p class="gce-' . esc_attr( $this->type ) . '-link"><a href="' . esc_url( $link ) . '" ' . esc_attr( $target ) . '>' . esc_html( $display_options['display_link_text'] ) . '</a></p>';
 		}
 
 		return $markup;
-		
+
 	}
-	
+
 	//Return the event markup using the builder
 	function use_builder() {
 		//Array of valid shortcodes
@@ -236,6 +255,7 @@ class GCE_Event {
 			'if-title',       //The event has a title
 			'if-description', //The event has a description
 			'if-location',    //The event has a location
+			'if-not-location',//The event does not have a location
 			'if-tooltip',     //The current display type is 'tooltip'
 			'if-list',        //The current display type is 'list'
 			'if-now',         //The event is taking place now (after the start time, but before the end time)
@@ -363,9 +383,25 @@ class GCE_Event {
 				return $m[1] . $description . $m[6];
 
 			case 'link':
+
 				$new_window = ( $newwindow ) ? ' target="_blank"' : '';
-				$ctz  = get_option( 'timezone_string' );
-				$link = $this->link . ( ! empty( $ctz ) ? '&ctz=' . $ctz : '' );
+
+				$ctz = gce_get_wp_timezone();
+
+				if ( isset( $this->feed->id ) ) {
+					$tz_option = esc_attr( get_post_meta( $this->feed->id, '_feed_timezone_setting', true ) );
+					if ( 'use_calendar' == $tz_option ) {
+						$ctz = '';
+					}
+				}
+
+				// Check if it is a hangouts link first
+				if( strpos( $this->link, 'plus.google.com/events/' ) !== false ) {
+					$link = $this->link;
+				} else {
+					$link = $this->link . ( ! empty( $ctz ) ? '&ctz=' . $ctz : '' );
+				}
+
 				return $m[1] . '<a href="' . esc_url( $link ) . '"' . $new_window . '>' . $this->look_for_shortcodes( $m[5] ) . '</a>' . $m[6];
 
 			case 'url':
@@ -420,6 +456,12 @@ class GCE_Event {
 
 			case 'if-location':
 				if ( '' != $this->location )
+					return $m[1] . $this->look_for_shortcodes( $m[5] ) . $m[6];
+
+				return '';
+
+			case 'if-not-location':
+				if ( '' == $this->location )
 					return $m[1] . $this->look_for_shortcodes( $m[5] ) . $m[6];
 
 				return '';
@@ -497,8 +539,8 @@ class GCE_Event {
 				return '';
 		}
 	}
-	
-	//Returns the difference between two times in human-readable format. Based on a patch for human_time_diff posted in the WordPress trac (http://core.trac.wordpress.org/ticket/9272) by Viper007Bond 
+
+	//Returns the difference between two times in human-readable format. Based on a patch for human_time_diff posted in the WordPress trac (http://core.trac.wordpress.org/ticket/9272) by Viper007Bond
 	function gce_human_time_diff( $from, $to = '', $limit = 1 ) {
 		$units = array(
 			31556926 => array( __( '%s year', 'gce' ),  __( '%s years', 'gce' ) ),
@@ -510,7 +552,7 @@ class GCE_Event {
 		);
 
 		if ( empty( $to ) )
-			$to = time(); 
+			$to = time();
 
 		$from = (int) $from;
 		$to   = (int) $to;
@@ -521,26 +563,26 @@ class GCE_Event {
 
 		foreach ( $units as $unitsec => $unitnames ) {
 			if ( $items >= $limit )
-				break; 
+				break;
 
 			if ( $diff < $unitsec )
-				continue; 
+				continue;
 
-			$numthisunits = floor( $diff / $unitsec ); 
-			$diff = $diff - ( $numthisunits * $unitsec ); 
-			$items++; 
+			$numthisunits = floor( $diff / $unitsec );
+			$diff = $diff - ( $numthisunits * $unitsec );
+			$items++;
 
 			if ( $numthisunits > 0 )
-				$output[] = sprintf( _n( $unitnames[0], $unitnames[1], $numthisunits ), $numthisunits ); 
-		} 
+				$output[] = sprintf( _n( $unitnames[0], $unitnames[1], $numthisunits, 'gce' ), $numthisunits );
+		}
 
-		$seperator = _x( ', ', 'human_time_diff' ); 
+		$seperator = _x( ', ', 'human_time_diff', 'gce' );
 
 		if ( ! empty( $output ) ) {
-			return implode( $seperator, $output ); 
+			return implode( $seperator, $output );
 		} else {
-			$smallest = array_pop( $units ); 
-			return sprintf( $smallest[0], 1 ); 
-		} 
-	} 
+			$smallest = array_pop( $units );
+			return sprintf( $smallest[0], 1 );
+		}
+	}
 }

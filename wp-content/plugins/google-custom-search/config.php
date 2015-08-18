@@ -4,9 +4,9 @@ global $gsc_version, $gcs_plugin_name, $gsc_plugin_dir_path, $gsc_search_engine_
 
 $gcs_plugin_name = "google-custom-search";
 
-$gsc_plugin_dir_path = WP_CONTENT_URL.'/plugins/'.plugin_basename(dirname(__FILE__));
+$gsc_plugin_dir_path = WP_CONTENT_URL . '/plugins/' . plugin_basename(dirname(__FILE__));
 
-$gsc_version = "1.3.5";
+$gsc_version = "1.3.6";
 
 $gsc_search_engine_id = "gsc_search_engine_id";
 

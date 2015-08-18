@@ -1,6 +1,5 @@
 <?php
-
-define( 'FOUNDATION_VERSION', '2.2' );
+define( 'FOUNDATION_VERSION', '2.3.6' );
 
 define( 'FOUNDATION_DIR', WPTOUCH_DIR . '/themes/foundation' );
 define( 'FOUNDATION_URL', WPTOUCH_URL . '/themes/foundation' );
@@ -116,6 +115,7 @@ function foundation_setting_defaults( $settings ) {
 	// General
 	$settings->video_handling_type = 'fitvids';
 	$settings->latest_posts_page = 'none';
+	$settings->allow_zoom = false;
 	$settings->logo_image = '';
 
 	// Login
@@ -192,7 +192,6 @@ function foundation_setting_defaults( $settings ) {
 	$settings->featured_autoslide = false;
 	$settings->featured_continuous = false;
 	$settings->featured_grayscale = false;
-	$settings->featured_title_date = true;
 	$settings->featured_type = 'latest';
 	$settings->featured_tag = '';
 	$settings->featured_category = '';
@@ -211,10 +210,6 @@ function foundation_setting_defaults( $settings ) {
 
 	// Pages
 	$settings->show_comments_on_pages = false;
-
-	// Related posts
-	$settings->related_posts_enabled = false;
-	$settings->related_posts_max = 3;
 
 	return $settings;
 }
@@ -331,9 +326,13 @@ function foundation_get_category_list() {
 }
 
 function foundation_setup_viewport(){
-	echo '<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width" />';
-	// iPhone 5
-	echo '<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" media="(device-height: 568px)" />';
+	$settings = foundation_get_settings();
+
+	if ( $settings->allow_zoom == true ) {
+		echo '<meta name="viewport" content="initial-scale=1.0, maximum-scale=3.0, user-scalable=yes, width=device-width" />';
+	} else {
+		echo '<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width" />';
+	}
 }
 
 function foundation_render_theme_settings( $page_options ) {
@@ -408,31 +407,31 @@ function foundation_render_theme_settings( $page_options ) {
 		FOUNDATION_SETTING_DOMAIN
 	);
 
+	wptouch_add_page_section(
+		FOUNDATION_PAGE_GENERAL,
+		__( 'Page Zoom', 'wptouch-pro' ),
+		'foundation-zoom',
+			array(
+				wptouch_add_setting(
+					'checkbox',
+					'allow_zoom',
+					__( 'Allow browser zooming', 'wptouch-pro' ),
+					__( '' ),
+					WPTOUCH_SETTING_BASIC,
+					'2.3.4'
+				)
+			),
+		$page_options,
+		FOUNDATION_SETTING_DOMAIN
+	);
+
 	wptouch_add_sub_page( FOUNDATION_PAGE_HOMESCREEN_ICONS, 'foundation-page-homescreen-icons', $page_options );
 
 	/* Homescreen Icon Area */
 
 	wptouch_add_page_section(
 		FOUNDATION_PAGE_HOMESCREEN_ICONS,
-		__( 'Icon Title', 'wptouch-pro' ),
-		'admin_menu_homescreen_icons_options',
-		array(
-			wptouch_add_pro_setting(
-				'text',
-				'homescreen_icon_title',
-				__( 'Icon title', 'wptouch-pro' ),
-				__( 'When visitors bookmark your website, this will be the title shown.', 'wptouch-pro' ),
-				WPTOUCH_SETTING_BASIC,
-				'1.0'
-			),
-		),
-		$page_options,
-		FOUNDATION_SETTING_DOMAIN
-	);
-
-	wptouch_add_page_section(
-		FOUNDATION_PAGE_HOMESCREEN_ICONS,
-		__( 'Android', 'wptouch-pro' ),
+		__( 'Low Resolution', 'wptouch-pro' ),
 		'admin_menu_homescreen_android',
 		array(
 			wptouch_add_setting(
@@ -450,13 +449,13 @@ function foundation_render_theme_settings( $page_options ) {
 
 	wptouch_add_page_section(
 		FOUNDATION_PAGE_HOMESCREEN_ICONS,
-		__( 'iPhone & iPod touch', 'wptouch-pro' ),
+		__( 'High Resolution', 'wptouch-pro' ),
 		'admin_menu_homescreen_iphone_android_retina',
 		array(
 			wptouch_add_setting(
 				'image-upload',
 				'iphone_icon_retina',
-				sprintf( __( '%d by %d pixels (PNG)', 'wptouch-pro' ), 180, 180 ),
+				sprintf( __( '%d by %d pixels (PNG)', 'wptouch-pro' ), 192, 192 ),
 				'',
 				WPTOUCH_SETTING_BASIC,
 				'2.0'
@@ -580,6 +579,7 @@ function foundation_setup_homescreen_icons() {
 		echo '<link rel="apple-touch-icon-precomposed" href="' . WPTOUCH_DEFAULT_HOMESCREEN_ICON . '" />' . "\n";
 	} else {
 		// iPhone / Android home screen icons
+		foundation_maybe_output_homescreen_icon( $settings->iphone_icon_retina, 192, 192, 2 );
 		foundation_maybe_output_homescreen_icon( $settings->iphone_icon_retina, 180, 180, 2 );
 		foundation_maybe_output_homescreen_icon( $settings->iphone_icon_retina, 120, 120, 2 );
 		foundation_maybe_output_homescreen_icon( $settings->iphone_icon_retina, 114, 114, 2 );
@@ -816,7 +816,7 @@ function wptouch_fdn_iOS_7() {
 If we're on iOS8
 */
 function wptouch_fdn_iOS_8() {
-	if ( strpos( $_SERVER['HTTP_USER_AGENT'],'iPhone OS 10_' ) || strpos( $_SERVER['HTTP_USER_AGENT'],'iPhone OS 8_' ) ) {
+	if ( strpos( $_SERVER['HTTP_USER_AGENT'],'iPhone OS 7_' ) || strpos( $_SERVER['HTTP_USER_AGENT'],'iPhone OS 8_' ) ) {
 		return true;
 	} else {
 		return false;
@@ -972,10 +972,13 @@ function wptouch_fdn_ordered_cat_list( $num, $include_count = true, $taxonomy = 
 		}
 	}
 
+
 	echo $opening_tag;
 	$sql = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}term_taxonomy INNER JOIN {$wpdb->prefix}terms ON {$wpdb->prefix}term_taxonomy.term_id = {$wpdb->prefix}terms.term_id WHERE taxonomy = '{$taxonomy}' AND {$wpdb->prefix}term_taxonomy.term_id NOT IN ($excluded_cats) AND count >= 1 ORDER BY count DESC LIMIT 0, $num");
 
 	if ( $sql ) {
+		$sql = apply_filters( 'wptouch_ordered_cat_list_categories', $sql );
+
 		foreach ( $sql as $result ) {
 			if ( $result ) {
 				$link = get_term_link( (int) $result->term_id, $taxonomy );
@@ -996,6 +999,116 @@ function wptouch_fdn_ordered_cat_list( $num, $include_count = true, $taxonomy = 
 		}
 	}
 	echo $closing_tag;
+}
+
+function wptouch_fdn_hierarchical_cat_list( $num, $include_count = true, $taxonomy = 'category', $opening_tag = '<ul>', $closing_tag = '</ul>' ) {
+	$walker = new WPtouchProMainNavMenuWalker;
+	$defaults = array(
+		'number' => $num,
+		'show_option_all' => false,
+		'show_option_none' => false,
+		'orderby' => 'name',
+		'order' => 'ASC',
+		'style' => 'list',
+		'show_count' => $include_count,
+		'hide_empty' => 1,
+		'use_desc_for_title' => 1,
+		'child_of' => 0,
+		'feed' => '',
+		'feed_type' => '',
+		'feed_image' => '',
+		'exclude' => '',
+		'exclude_tree' => '',
+		'current_category' => 0,
+		'hierarchical' => true,
+		'title_li' => false,
+		'echo' => 1,
+		'depth' => 0,
+		'taxonomy' => $taxonomy,
+		'walker' => new WPtouchProCategoryWalker
+	);
+
+	if ( isset( $args ) ) {
+		$r = wp_parse_args( $args, $defaults );
+	} else {
+		$r = $defaults;
+	}
+
+	if ( !isset( $r['pad_counts'] ) && $r['show_count'] && $r['hierarchical'] )
+		$r['pad_counts'] = true;
+
+	if ( true == $r['hierarchical'] ) {
+		$r['exclude_tree'] = $r['exclude'];
+		$r['exclude'] = '';
+	}
+
+	if ( ! isset( $r['class'] ) )
+		$r['class'] = ( 'category' == $r['taxonomy'] ) ? 'categories' : $r['taxonomy'];
+
+	if ( ! taxonomy_exists( $r['taxonomy'] ) ) {
+		return false;
+	}
+
+	$show_option_all = $r['show_option_all'];
+	$show_option_none = $r['show_option_none'];
+
+	$categories = get_categories( $r );
+
+	$output = '';
+
+	if ( empty( $categories ) ) {
+		if ( ! empty( $show_option_none ) ) {
+			if ( 'list' == $r['style'] ) {
+				$output .= '<li class="cat-item-none">' . $show_option_none . '</li>';
+			} else {
+				$output .= $show_option_none;
+			}
+		}
+	} else {
+		$output = $opening_tag;
+
+		if ( ! empty( $show_option_all ) ) {
+			$posts_page = ( 'page' == get_option( 'show_on_front' ) && get_option( 'page_for_posts' ) ) ? get_permalink( get_option( 'page_for_posts' ) ) : home_url( '/' );
+			$posts_page = esc_url( $posts_page );
+			if ( 'list' == $r['style'] ) {
+				$output .= "<li class='cat-item-all'><a href='$posts_page'>$show_option_all</a></li>";
+			} else {
+				$output .= "<a href='$posts_page'>$show_option_all</a>";
+			}
+		}
+
+		if ( empty( $r['current_category'] ) && ( is_category() || is_tax() || is_tag() ) ) {
+			$current_term_object = get_queried_object();
+			if ( $current_term_object && $r['taxonomy'] === $current_term_object->taxonomy ) {
+				$r['current_category'] = get_queried_object_id();
+			}
+		}
+
+		if ( $r['hierarchical'] ) {
+			$depth = $r['depth'];
+		} else {
+			$depth = -1; // Flat.
+		}
+		$output .= walk_category_tree( $categories, $depth, $r );
+
+		$output .= '</ul>';
+	}
+
+	/**
+	 * Filter the HTML output of a taxonomy list.
+	 *
+	 * @since 2.1.0
+	 *
+	 * @param string $output HTML output.
+	 * @param array  $args   An array of taxonomy-listing arguments.
+	 */
+	$html = apply_filters( 'wp_list_categories', $output, $r );
+
+	if ( $r['echo'] ) {
+		echo $html;
+	} else {
+		return $html;
+	}
 }
 
 function wptouch_fdn_ordered_tag_list( $num ) {

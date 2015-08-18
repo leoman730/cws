@@ -39,7 +39,6 @@ jQuery(document).ready(function ($) {
     $('#yks-mailchimp-form').submit(function (e) {	        
         // Make sure the api key exists
        if (blankFieldCheck()) {
-		tinyMCE.triggerSave();
             $('#yks-status').slideUp('fast');
 				$.ajax({
 					type: 'POST',
@@ -328,25 +327,7 @@ jQuery(document).ready(function() {
 <?php
 	$api_key_option = get_option( 'api_validation' );
 	$wordPress_version = get_bloginfo( 'version' );
-	
-	// set up the options for our WYSIWYG editors
-	// for the optin messages
-	$single_optin_message_parameters = array(
-		'teeny' => true,
-		'textarea_rows' => 15,
-		'tabindex' => 1,
-		'textarea_name' => 'single-optin-message',
-		'drag_drop_upload' => true
-	);
-	
-	$double_optin_message_parameters = array(
-		'teeny' => true,
-		'textarea_rows' => 15,
-		'tabindex' => 1,
-		'textarea_name' => 'double-optin-message',
-		'drag_drop_upload' => true
-	);
-	
+		
 	// used to dictate the active tab
 	$active_tab = isset( $_GET[ 'tab' ] ) ? $_GET[ 'tab' ] : 'form_options';
 ?>
@@ -465,11 +446,11 @@ jQuery(document).ready(function() {
 					<th scope="row"><label for="yks-mailchimp-custom-optIn-message"><?php _e('Success Message','yikes-inc-easy-mailchimp-extender'); ?></label></th>
 					<td>
 						<label for="double-optin-message" <?php if ($this->optionVal['optin'] == 'false') { echo 'style="display:none;"'; } ?>><b><?php _e('Double Opt-In Message','yikes-inc-easy-mailchimp-extender'); ?></b>
-							<?php wp_editor( $this->optionVal['double-optin-message'] , 'double_optin_message', $double_optin_message_parameters); ?>
+							<textarea id="double_optin_message" name="double-optin-message" style="display:block;width:450px;resize:vertical;min-height:150px;"><?php echo stripslashes( $this->optionVal['double-optin-message'] ); ?></textarea>
 						</label>
 						
 						<label for="single-optin-message" <?php if ($this->optionVal['optin'] == 'true') { echo 'style="display:none;"'; } ?>><b><?php _e('Single Opt-In Message','yikes-inc-easy-mailchimp-extender'); ?></b>
-							<?php wp_editor( $this->optionVal['single-optin-message'] , 'single_optin_message', $single_optin_message_parameters); ?>
+							<textarea id="single_optin_message" name="single-optin-message" style="display:block;width:450px;resize:vertical;min-height:150px;"><?php echo stripslashes( $this->optionVal['single-optin-message'] ); ?></textarea>
 						</label>
 					
 					</td>
@@ -672,7 +653,7 @@ jQuery(document).ready(function() {
 					<!-- Toggle Verify Peer Description -->
 					<td class="yks-settings-description">
 						<?php _e( "If you receive the following response from MailChimp API : 'SSL certificate problem, verify that the CA cert is OK' " , "yikes-inc-easy-mailchimp-extender" ); ?><br />
-						<?php _e( "set this setting to false. Changing this setting after things have been set up may break the plugin." , "yikes-inc-easy-mailchimp-extender" ); ?>
+						<?php _e( "set this setting to false." , "yikes-inc-easy-mailchimp-extender" ); ?>
 					</td>
 				</tr>
 				

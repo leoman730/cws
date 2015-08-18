@@ -2,8 +2,8 @@
 /*
 	Plugin Name: WPtouch Mobile Plugin
 	Plugin URI: http://www.wptouch.com/
-	Version: 3.6.3
-	Description: Create a slick mobile WordPress website with just a few clicks
+	Version: 3.8.3
+	Description: Make your WordPress website mobile-friendly with just a few clicks
 	Author: BraveNewCode Inc.
 	Author URI: http://www.wptouch.com/
 	Text Domain: wptouch-pro
@@ -13,9 +13,8 @@
 */
 
 function wptouch_create_three_object() {
-
 	if ( !defined( 'WPTOUCH_IS_PRO' ) ) {
-		define( 'WPTOUCH_VERSION', '3.6.3' );
+		define( 'WPTOUCH_VERSION', '3.8.3' );
 
 		define( 'WPTOUCH_BASE_NAME', basename( __FILE__, '.php' ) . '.php' );
 		define( 'WPTOUCH_DIR', WP_PLUGIN_DIR . DIRECTORY_SEPARATOR . basename( __FILE__, '.php' ) );
@@ -86,3 +85,4 @@ register_deactivation_hook( __FILE__, 'wptouch_handle_deactivation' );
 // Main WPtouch Pro activation hook
 add_action( 'plugins_loaded', 'wptouch_create_three_object' );
 add_action( 'admin_init', 'wptouch_disable_self' );
+
